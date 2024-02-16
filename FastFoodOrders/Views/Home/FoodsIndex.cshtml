@@ -1,0 +1,18 @@
+﻿@model List<FastFoodOrders.Models.FoodViewModel>
+@{
+    ViewBag.Title = "Fast Food";
+}
+<a asp-controller="Home" asp-action="CreateFood"  class="btn btn-dark">Create Food</a>
+<div class="card-deck">
+    @foreach (var food in Model)
+    {
+        <div class="card m-3">
+            <img class="card-img-top" src="~/images/burger.jpg" asp-append-version="true" />
+            <div class="card-footer text-center">
+                <h3>@food.Name</h3>
+                <h5 class="text-danger">@food.Price</h5>
+                <a href="#" class="btn btn-outline-success">Order</a>
+                <a asp-controller="home" asp-action="details" asp-route-Id="@food.Id" class="btn btn-outline-warning">Details</a>
+            </div>
+        </div>
+    }
