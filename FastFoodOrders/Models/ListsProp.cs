@@ -1,86 +1,76 @@
 ﻿
 
+
+using FastFoodOrders.ViewModel;
+
 namespace FastFoodOrders.Models
 {
     public class ListsProp : IFoodRepository
     {
-        private readonly ClientDbContext _logger;
+        private readonly AdminDbContext _logger;
 
-        List<Client> clientsList = new List<Client>();
-        public ListsProp(ClientDbContext logger)
+        public ListsProp(AdminDbContext logger)
         {
             _logger = logger;
+        }        
+
+        IEnumerable<Client> IFoodRepository.GetClients()
+        {
+            return _logger.Clients;
         }
 
-        public List<FoodViewModel> FoodsList()
+        IEnumerable<Food> IFoodRepository.GetFoods()
         {
-            var foods = _logger.Foods.ToList();
-            List<FoodViewModel> foodsList = new List<FoodViewModel>();
+            return _logger.Foods;
+        }
 
-            foreach (var item in foods)
+        Client IFoodRepository.CreateClients(Client client)
+        {
+            _logger.Clients.Add(client);
+            _logger.SaveChanges();
+            return client;
+        }
+
+        Food IFoodRepository.CreateFood(Food food)
+        {
+            _logger.Foods.Add(food);
+            _logger.SaveChanges();
+            return food;
+        }
+
+        Client IFoodRepository.UpdateClients(Client client)
+        {
+            throw new NotImplementedException();
+        }
+
+        Client IFoodRepository.DeleteClients(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Food IFoodRepository.GetFood(int id)
+        {
+            return _logger.Foods.Find(id);
+        }
+
+        Food IFoodRepository.UpdateFood(Food updateFood)
+        {
+            var food = _logger.Foods.Attach(updateFood);
+            food.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _logger.SaveChanges();
+            return updateFood;
+        }
+
+        Food IFoodRepository.DeleteFood(int id)
+        {
+            var food = _logger.Foods.Find(id);
+            if (food != null)
             {
-                var fViewModel = new FoodViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Compositions = item.Compositions,
-                    Price = item.Price,
-                    PhotoFilePath = item.PhotoFilePath
-                };
-                foodsList.Add(fViewModel);
+                _logger.Foods.Remove(food);
+                _logger.SaveChanges();
             }
-            return foodsList;
+            return food;
         }
 
-        public List<Client> ClientsList()
-        {
-            var clients = _logger.Clients.ToList();
-
-            foreach (var client in clients)
-            {
-                var cViewModel = new Client()
-                {
-                    Id = client.Id,
-                    Fullname = client.Fullname,
-                    Username = client.Username,
-                    Password = client.Password,
-                    Phone = client.Phone
-                };
-                clientsList.Add(cViewModel);
-            }
-            return clientsList;
-        }
-       
-        //public Client CreateClients(HomeCreateClientsViewModel homeCreate)
-        //{
-        //    var clients = _logger.Clients.ToList();
-        //    foreach (var client in clients)
-        //    {
-        //        var cViewModel = new ClientViewModel()
-        //        {
-                    
-        //        };
-        //    }
-        //}
-
-        public Food GetFood(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Food> GetFoods()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Client CreateClients(Client client)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Client> GetClients()
-        {
-            return clientsList;
-        }
     }
 }

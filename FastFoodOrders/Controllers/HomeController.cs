@@ -1,88 +1,45 @@
-using FastFoodOrders.Models;
+﻿using FastFoodOrders.Models;
+using FastFoodOrders.ViewModel;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace FastFoodOrders.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IFoodRepository _logger;
-        public HomeController(IFoodRepository logger)
+        private readonly IWebHostEnvironment webHost;
+        Basket basket;
+
+
+        public HomeController(IFoodRepository logger ,IWebHostEnvironment webHost)
         {
             _logger = logger;
+            this.webHost = webHost;
         }
-
         public IActionResult Index()
         {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult ClientsIndex()
-        {
-            ClientViewModel viewModel = new ClientViewModel()
+            FoodViewModel foods = new FoodViewModel()
             {
-                Clients = _logger.GetClients()
+                Foods = _logger.GetFoods()
             };
-            return View(viewModel);
+            return View(foods);
         }
-
-        public IActionResult FoodsIndex()
-        {
-            return View();
-        }
-        public IActionResult CreateFood() 
-        {
-            return View();  
-        }
-
-        [HttpGet]
-        public ViewResult CreateClients()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateClients(Client client)
-        {
-            return View(client);
-        }
-
-        public IActionResult Privacy()
+        public IActionResult SignUp()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Basket(Food food)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            FoodViewModel foods = new FoodViewModel()
+            {
+                Foods = _logger.GetFoods()
+            };
+            return View(foods);
         }
+       
+
     }
 }
-
-
-//try
-//{
-//    if (ModelState.IsValid)
-//    {
-//        var clients = new Client
-//        {
-//            Fullname = createViewModel.Fullname,
-//            Username = createViewModel.Username,
-//            Password = createViewModel.Password,
-//            Phone = createViewModel.Phone
-//        };
-//        _logger.Clients.Add(clients);
-//        _logger.SaveChanges();
-//        return RedirectToAction("ClientsIndex");
-//    }
-//    else
-//    {
-//        TempData["errormessage"] = "XATO";
-//        return View();
-//    }
-//}
-//catch (Exception ex)
-//{
-//    TempData["errormessage"] = ex.Message;
-//    return View();
-//}

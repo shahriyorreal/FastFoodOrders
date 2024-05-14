@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastFoodOrders.Migrations
 {
-    [DbContext(typeof(ClientDbContext))]
+    [DbContext(typeof(AdminDbContext))]
     partial class ClientsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace FastFoodOrders.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Categories")
+                        .HasColumnType("int");
+
                     b.Property<string>("Compositions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,6 +79,45 @@ namespace FastFoodOrders.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Foods");
+                });
+
+            modelBuilder.Entity("FastFoodOrders.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Adress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Compositions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameFood")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhotoFilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Price")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
                 });
 #pragma warning restore 612, 618
         }

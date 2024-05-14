@@ -2,9 +2,14 @@
 {
     public interface IFoodRepository
     {
-        Food GetFood(int Id);
-        List<Client> GetClients();
+        IEnumerable<Client> GetClients();
         IEnumerable<Food> GetFoods();
-        Client CreateClients (Client client); 
+        Food GetFood(int id);
+        Food UpdateFood(Food food);
+        Food DeleteFood(int id);
+        Food CreateFood(Food food);
+        Client CreateClients (Client client);
+        Client UpdateClients(Client client);
+        Client DeleteClients(int id);
     }
 }

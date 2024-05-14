@@ -6,10 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ClientDbContext>(options =>
+builder.Services.AddDbContext<AdminDbContext>(options =>
 {
     options.UseSqlServer("Server=SHAHRIYOR\\SQLEXPRESS;Database=FastFoodDb;Trusted_Connection=True;TrustServerCertificate=True");
 });
+
+builder.Services.AddScoped<IFoodRepository, ListsProp>();
 
 var app = builder.Build();
 

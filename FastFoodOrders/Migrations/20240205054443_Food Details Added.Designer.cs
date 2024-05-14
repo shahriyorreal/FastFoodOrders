@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastFoodOrders.Migrations
 {
-    [DbContext(typeof(ClientDbContext))]
+    [DbContext(typeof(AdminDbContext))]
     [Migration("20240205054443_Food Details Added")]
     partial class FoodDetailsAdded
     {
