@@ -26,7 +26,8 @@ namespace FastFoodOrders.Controllers
             };
             return View(foods);
         }
-        public IActionResult SignUp()
+
+		public IActionResult SignUp()
         {
             return View();
         }

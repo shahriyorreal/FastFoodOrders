@@ -18,3 +18,37 @@ let quantity = document.querySelector('.quantity');
 //closeShopping.addEventListener('click', () => {
 //    body.classList.remove('active');
 //})
+
+
+function changeImage1(x, image) {
+	if (x == 1) {
+		image.src = "images/first_active.png"
+	}
+	if (x == 2) {
+		image.src = "images/first.png"
+	}
+}
+function changeImage2(x, image) {
+	if (x == 1) {
+		image.src = "images/second_active.png"
+	}
+	if (x == 2) {
+		image.src = "images/second.png"
+	}
+}
+function changeImage3(x, image) {
+	if (x == 1) {
+		image.src = "images/salad_active.png"
+	}
+	if (x == 2) {
+		image.src = "images/salad.png"
+	}
+}
+function changeImage4(x, image) {
+	if (x == 1) {
+		image.src = "images/drink_active.png"
+	}
+	if (x == 2) {
+		image.src = "images/drink.png"
+	}
+}
